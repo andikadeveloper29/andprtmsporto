@@ -1,286 +1,373 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OMEGA CORE :: ANDIKA PRATAMA</title>
+<title>PORTOFOLIO | K.M.S ANDIKA PRATAMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
-
 :root{
---bg:#000000;
---accent:#00f0ff;
---accent2:#ff00c8;
---accent3:#00ff88;
---text:#ffffff;
+--primary:#00f0ff;
+--secondary:#0066ff;
+--accent:#00ff88;
+--dark:#0a0f1f;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
 
 body{
-background:#000;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0a0f1f,#111b3a,#0a0f1f);
+background-size:400% 400%;
+animation:bgMove 20s ease infinite;
 color:white;
-font-family:'Rajdhani',sans-serif;
-overflow-x:hidden;
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-5;
-}
-
-#bootScreen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-color:#00ff88;
-font-family:monospace;
-padding:40px;
-z-index:9999;
 overflow:hidden;
 }
 
-#bootText{
-white-space:pre-line;
-font-size:14px;
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
-nav{
+/* ===== MARQUEE ===== */
+.marquee{
+position:fixed;
+top:0;
+width:100%;
+background:black;
+color:var(--accent);
+font-family:monospace;
+padding:6px 0;
+white-space:nowrap;
+overflow:hidden;
+z-index:10000;
+}
+
+.marquee span{
+display:inline-block;
+padding-left:100%;
+animation:scrollText 18s linear infinite;
+}
+
+@keyframes scrollText{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+}
+
+/* ===== SCAN SCREEN ===== */
+#scanScreen{
 position:fixed;
 width:100%;
-display:flex;
-justify-content:space-between;
-padding:20px 40px;
-background:rgba(0,0,0,0.4);
-backdrop-filter:blur(15px);
-border-bottom:1px solid rgba(0,240,255,0.2);
-z-index:1000;
-}
-
-.logo{
-font-family:'Orbitron';
-font-weight:900;
-color:var(--accent);
-text-shadow:0 0 20px var(--accent);
-}
-
-.nav-links a{
-margin-left:20px;
-text-decoration:none;
-color:white;
-}
-
-section{
-min-height:100vh;
+height:100%;
+background:black;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-padding:100px 20px;
+z-index:9999;
 }
 
-.hero h1{
-font-family:'Orbitron';
-font-size:clamp(40px,8vw,90px);
-background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+#terminal{
+width:90%;
+max-width:800px;
+height:250px;
+background:#000;
+border:1px solid var(--primary);
+padding:15px;
+font-family:monospace;
+font-size:13px;
+color:var(--accent);
+overflow:auto;
+box-shadow:0 0 40px rgba(0,255,255,0.5);
+}
+
+#progressBarContainer{
+width:90%;
+max-width:800px;
+height:8px;
+background:#111;
+margin-top:15px;
+border-radius:10px;
+overflow:hidden;
+}
+
+#progressBar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+/* ===== NAV ===== */
+nav{
+position:fixed;
+top:35px;
+width:100%;
+display:flex;
+justify-content:space-between;
+padding:20px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+transition:0.3s;
+}
+
+nav a:hover{
+color:var(--primary);
+}
+
+/* ===== SECTIONS ===== */
+section{
+min-height:100vh;
+padding:150px 10%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+
+section.active{
+opacity:1;
+transform:translateY(0);
+}
+
+h1,h2{
+font-family:'Orbitron',sans-serif;
+margin-bottom:20px;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%,100%{filter:brightness(1)}
-50%{filter:brightness(2)}
 }
 
 .card{
 background:rgba(255,255,255,0.05);
-padding:25px;
-border-radius:15px;
-margin:15px;
-width:min(90%,500px);
-backdrop-filter:blur(10px);
-border:1px solid rgba(0,240,255,0.2);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+border:1px solid rgba(0,255,255,0.2);
+box-shadow:0 0 30px rgba(0,255,255,0.15);
+margin-bottom:40px;
+line-height:1.8;
 transition:0.4s;
 }
 
 .card:hover{
-transform:scale(1.08);
-box-shadow:0 0 40px rgba(0,240,255,0.6);
+transform:translateY(-5px);
+box-shadow:0 0 60px rgba(0,255,255,0.3);
 }
 
-footer{
-padding:20px;
-text-align:center;
-border-top:1px solid rgba(0,240,255,0.2);
+/* ===== SKILL ===== */
+.skill{
+margin:15px 0;
 }
 
-#terminal{
-position:fixed;
-bottom:10px;
-right:10px;
-width:340px;
-height:220px;
-background:black;
-border:1px solid var(--accent);
-font-family:monospace;
-font-size:12px;
-padding:10px;
+.skill-bar{
+height:8px;
+background:#111;
+border-radius:10px;
 overflow:hidden;
 }
 
-#scanline{
-position:fixed;
-width:100%;
+.skill-fill{
 height:100%;
-pointer-events:none;
-background:linear-gradient(transparent 50%,rgba(0,255,255,0.03) 50%);
-background-size:100% 4px;
-z-index:999;
+width:0;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+transition:2s;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+section{
+padding:150px 20px;
+}
 }
 
 </style>
 </head>
 <body>
 
-<div id="bootScreen"><div id="bootText"></div></div>
-<canvas id="space"></canvas>
-<div id="scanline"></div>
+<div class="marquee">
+<span>⚠ WEBSITE DIPANTAU 24/7 OLEH SISTEM KEAMANAN R29 • MONITORING REALTIME ACTIVE ⚠</span>
+</div>
+
+<div id="scanScreen">
+<h2 style="color:#00ff88;font-family:monospace;">R29 DEADLY VIRUS SCAN PROTOCOL</h2>
+<div id="terminal"></div>
+<div id="progressBarContainer">
+<div id="progressBar"></div>
+</div>
+</div>
 
 <nav>
-<div class="logo">OMEGA_CORE</div>
-<div class="nav-links">
-<a href="#hero">Home</a>
+<div>PORTOFOLIO</div>
+<div>
+<a href="#home">Home</a>
 <a href="#about">About</a>
-<a href="#description">Description</a>
-<a href="https://www.instagram.com/_andprtms?igsh=OTZtNjJvdHZmeTVi" target="_blank">Instagram</a>
+<a href="#skills">Skill</a>
+<a href="#deskripsi">Deskripsi</a>
+<a href="#jasa">Jasa</a>
+<a href="#sosial">Sosial</a>
 </div>
 </nav>
 
-<section id="hero" class="hero">
-<h1>KMS ANDIKA PRATAMA</h1>
-<p>OMEGA LEVEL SYSTEM ENGINEER</p>
+<section id="home">
+<div class="card">
+<h1>K.M.S ANDIKA PRATAMA</h1>
+<p>Website ini merupakan representasi profesional saya sebagai Web Developer, Hosting Engineer, Game Developer, dan Prompt Engineer. Portfolio ini dirancang untuk menampilkan kemampuan teknis, arsitektur sistem, serta pendekatan profesional dalam membangun solusi digital modern dan aman.</p>
+</div>
 </section>
 
 <section id="about">
 <div class="card">
-<h2>IDENTITY</h2>
-<p>
-Web Developer, Game Developer, Hosting Engineer, Prompt Engineer.
-</p>
+<h2>Tentang Saya</h2>
+<p>Sebagai Web Developer saya membangun website responsif dan scalable. Sebagai Hosting Engineer saya menangani server, domain, keamanan, dan optimasi performa. Sebagai Game Developer saya mengembangkan sistem logika interaktif berbasis algoritma. Sebagai Prompt Engineer saya mengoptimalkan interaksi AI untuk menghasilkan output presisi dan efektif.</p>
 </div>
 </section>
 
-<section id="description">
-<div class="card"><h3>Hosting Engineer</h3><p>Bertanggung jawab dalam pengelolaan infrastruktur hosting untuk website dan server game, termasuk deployment, konfigurasi domain dan DNS, serta optimalisasi performa server. Selain itu, berfokus pada keamanan sistem dengan menerapkan langkah-langkah pencegahan terhadap serangan seperti DDoS, monitoring aktivitas server, dan menjaga stabilitas layanan agar tetap aman dan tersedia secara konsisten.</p></div>
-<div class="card"><h3>Game Developer</h3><p>Mengembangkan dan membangun game dengan fokus pada sistem permainan, logika, serta scripting fitur. Saya merancang mekanisme gameplay yang interaktif dan memastikan setiap sistem berjalan dengan stabil untuk memberikan pengalaman bermain yang optimal.</p></div>
-<div class="card"><h3>Web Developer</h3><p>Berfokus pada pengembangan website dan aplikasi web berbasis teknologi modern. Mengutamakn arsitektur kode yang bersih, opyimalisasi performa, serta desain responsif untuk menciptakan solusi digital yang profesional dan berdaya saing.</p></div>
-<div class="card"><h3>Prompt Engineer</h3><p>Berfokus pada perancangan dan optimalisasi prompt untuk memaksimalkan kinerja sistem AI. Menggunakan pendekatan analistis dan interatif untuk memastikan output yang relevan, terstruktur, dan sesuai dengan kebutuhan pengguna</p></div>
+<section id="skills">
+<div class="card">
+<h2>Keahlian Teknis</h2>
+
+<div class="skill">HTML
+<div class="skill-bar"><div class="skill-fill" data-width="100%"></div></div>
+</div>
+
+<div class="skill">CSS
+<div class="skill-bar"><div class="skill-fill" data-width="98%"></div></div>
+</div>
+
+<div class="skill">JavaScript
+<div class="skill-bar"><div class="skill-fill" data-width="95%"></div></div>
+</div>
+
+<div class="skill">Python
+<div class="skill-bar"><div class="skill-fill" data-width="92%"></div></div>
+</div>
+
+<div class="skill">C++
+<div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+</div>
+
+</div>
 </section>
 
-<footer>2026 ANDIKA PRATAMA :: OMEGA CORE</footer>
+<section id="deskripsi">
+<div class="card">
+<h2>Deskripsi Profesi</h2>
+<p>Web Developer bertanggung jawab dalam membangun dan mengembangkan website modern menggunakan teknologi HTML, CSS, JavaScript dan framework terkini. Hosting Engineer mengelola infrastruktur server, keamanan jaringan, dan kestabilan layanan. Game Developer merancang sistem permainan interaktif berbasis algoritma dan logika. Prompt Engineer mengembangkan strategi komunikasi AI agar menghasilkan output terstruktur dan optimal.</p>
+</div>
+</section>
 
-<div id="terminal"></div>
+<section id="jasa">
+<div class="card">
+<h2>Layanan Profesional</h2>
+<p>✔ Pembuatan website profesional<br>
+✔ Pengembangan sistem web modern<br>
+✔ Pembuatan game berbasis logika<br>
+✔ Konfigurasi & perbaikan hosting<br>
+✔ Optimasi server dan keamanan<br>
+✔ Konsultasi arsitektur digital</p>
+</div>
+</section>
+
+<section id="sosial">
+<div class="card">
+<h2>Sosial Media</h2>
+<p>Instagram: @_andprtms</p>
+</div>
+</section>
 
 <script>
 
-/* BOOT SEQUENCE */
+document.addEventListener("DOMContentLoaded",function(){
 
-const bootLines=[
-"OMEGA CORE INITIALIZING...",
-"Loading neural interface...",
-"Accessing memory...",
-"Decrypting identity...",
-"WELCOME KMS ANDIKA PRATAMA",
-"System ready."
-];
-
-let bootIndex=0;
-const bootText=document.getElementById('bootText');
-
-function bootSequence(){
-if(bootIndex<bootLines.length){
-bootText.innerHTML+=bootLines[bootIndex]+"\n";
-bootIndex++;
-setTimeout(bootSequence,500);
-}else{
-setTimeout(()=>{
-document.getElementById('bootScreen').style.display='none';
-},800);
+/* ===== SCROLL ANIMATION ===== */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+if(window.scrollY+window.innerHeight>sec.offsetTop+100){
+sec.classList.add("active");
 }
-}
-
-bootSequence();
-
-/* SPACE */
-
-const canvas=document.getElementById('space');
-const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;
-canvas.height=innerHeight;
-
-let stars=Array.from({length:400},()=>({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-z:Math.random()*canvas.width
-}));
-
-function draw(){
-ctx.fillStyle="black";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="white";
-stars.forEach(s=>{
-s.z-=1;
-if(s.z<=0)s.z=canvas.width;
-let k=128/s.z;
-ctx.fillRect(s.x*k,s.y*k,2,2);
 });
-requestAnimationFrame(draw);
-}
+});
 
-draw();
+/* ===== SKILL FILL ===== */
+window.addEventListener("scroll",()=>{
+document.querySelectorAll(".skill-fill").forEach(bar=>{
+bar.style.width=bar.dataset.width;
+});
+});
 
-/* TERMINAL AI */
+/* ===== 30 SECOND SCAN ===== */
+const terminal=document.getElementById("terminal");
+const progressBar=document.getElementById("progressBar");
 
-const terminal=document.getElementById('terminal');
-const aiLines=[
-"System monitoring active.",
-"User identity confirmed.",
-"Developer profile loaded.",
-"Awaiting commands..."
+let percent=0;
+let duration=30000;
+let interval=duration/100;
+
+let messages=[
+"Injecting malicious payload...",
+"Bypassing firewall layer...",
+"Extracting device fingerprint...",
+"Decrypting system protocol...",
+"Analyzing human signature...",
+"Neutralizing threat...",
+"Secure access granted..."
 ];
 
-let aiIndex=0;
-setInterval(()=>{
-terminal.innerHTML+=aiLines[aiIndex%aiLines.length]+"<br>";
+let scan=setInterval(()=>{
+percent++;
+progressBar.style.width=percent+"%";
+
+if(percent%5===0){
+let msg=messages[Math.floor(Math.random()*messages.length)];
+terminal.innerHTML+=msg+"<br>";
 terminal.scrollTop=terminal.scrollHeight;
-aiIndex++;
-},2000);
-
-/* SECRET MODE */
-
-let code="";
-document.addEventListener('keydown',e=>{
-code+=e.key;
-if(code.includes("omega")){
-document.body.style.filter="invert(1)";
-setTimeout(()=>document.body.style.filter="invert(0)",300);
-code="";
 }
+
+if(percent>=100){
+clearInterval(scan);
+setTimeout(()=>{
+document.getElementById("scanScreen").style.display="none";
+document.body.style.overflow="auto";
+speakIntro();
+},1500);
+}
+},interval);
+
+/* ===== VOICE ===== */
+function speakIntro(){
+let msg1=new SpeechSynthesisUtterance("Halo selamat datang di website portofolio K M S Andika Pratama");
+msg1.lang="id-ID";
+speechSynthesis.speak(msg1);
+
+setTimeout(()=>{
+let msg2=new SpeechSynthesisUtterance("Perkenalkan saya R29. Saya sistem asisten yang dikembangkan oleh Andika Pratama untuk menjaga website ini dari serangan.");
+msg2.lang="id-ID";
+speechSynthesis.speak(msg2);
+},4000);
+}
+
 });
 
 </script>
 
 </body>
 </html>
-
-
-
-
